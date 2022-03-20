@@ -1,56 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;netstandard2.0;net461</TargetFrameworks>
-    <RuntimeIdentifiers>win10-x64;osx-x64;ubuntu-x64</RuntimeIdentifiers>
-    <Description>Multiformat hash encoding</Description>
-    <Copyright>Copyright © tabrath 2019</Copyright>
-    <AssemblyTitle>Multiformats.Hash</AssemblyTitle>
-    <VersionPrefix>1.5.0</VersionPrefix>
-    <Authors>tabrath</Authors>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb;$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Multiformats.Hash</AssemblyName>
-    <PackageId>Multiformats.Hash</PackageId>
-    <PackageTags>multiformats multihash sha1 sha3 keccak blake2 shake</PackageTags>
-    <PackageIconUrl>https://cdn.rawgit.com/multiformats/website/116894f6/favicon.png</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/multiformats/cs-multihash/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/multiformats/cs-multihash</RepositoryUrl>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputType>Library</OutputType>
-    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
-    <!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
-    <NoWarn>$(NoWarn);NU1605</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AssemblyTitle>Multiformats.Hash</AssemblyTitle>
+    <Authors>tabrath</Authors>
+    <Copyright>Copyright © tabrath 2019</Copyright>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>$(DefineConstants)</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <Description>Multiformat hash encoding</Description>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Debug' ">true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
+    <OutputType>Library</OutputType>
+    <PackageIconUrl>https://cdn.rawgit.com/multiformats/website/116894f6/favicon.png</PackageIconUrl>
+    <PackageId>Multiformats.Hash</PackageId>
+    <PackageLicenseUrl>https://github.com/multiformats/cs-multihash/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>multiformats multihash sha1 sha3 keccak blake2 shake</PackageTags>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/multiformats/cs-multihash</RepositoryUrl>
+    <RuntimeIdentifiers>win10-x64;osx-x64;ubuntu-x64</RuntimeIdentifiers>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>.pdb;$(AllowedOutputExtensionsInPackageBuildOutputFolder)</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <TargetFramework>net6</TargetFramework>
+    <VersionPrefix>1.5.0</VersionPrefix>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.5" />
-    <PackageReference Include="BinaryEncoding" Version="1.4.0" />
-    <PackageReference Include="Multiformats.Base" Version="2.0.1" />
-    <PackageReference Include="System.Composition" Version="1.2.0" />
-    <PackageReference Include="murmurhash" Version="1.0.2" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19270-01">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="BinaryEncoding" Version="1.5.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+    <PackageReference Include="Multiformats.Base" Version="2.0.2" />
+    <PackageReference Include="murmurhash" Version="1.0.3" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="System.Composition" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Algorithms\BLAKE2B.cs">

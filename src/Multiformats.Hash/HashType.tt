@@ -1,60 +1,137 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
-namespace Multiformats.Hash
+namespace Multiformats.Hash;
+
+/// <summary>
+/// The hash type enumeration
+/// </summary>
+public enum HashType : uint
 {
-    public enum HashType : uint
-    {
-        ID = 0x00,
-        MD4 = 0xd4,
-        MD5 = 0xd5,
-        SHA1 = 0x11,
-        SHA2_256 = 0x12,
-        SHA2_512 = 0x13,
-        SHA3_512 = 0x14,
-        SHA3_384 = 0x15,
-        SHA3_256 = 0x16,
-        SHA3_224 = 0x17,
-        SHAKE_128 = 0x18,
-        SHAKE_256 = 0x19,
-<#
-    var keccac_bits = new int[] { 224, 256, 384, 512 };
-    for (var i = 0; i < keccac_bits.Length; i++)
-    {
-#>
-        KECCAK_<#= keccac_bits[i] #> = <#= string.Format("0x{0:X}", 26 + i) #>,
-<#
-    }
-#>
-        MURMUR3_128 = 0x23,
-        MURMUR3_32 = 0x22,
-<#
-    for (int i = 8; i <= 512; i += 8)
-    {
-#>
-        BLAKE2B_<#= i #> = <#= string.Format("0x{0:x}", 45569 + (i / 8) - 1) #>,
-<#
-    }
+	/// <summary>
+	/// ID
+	/// </summary>
+	ID = 0x00,
 
-    for (int i = 8; i <= 256; i += 8) { #>
-        BLAKE2S_<#= i #> = <#= string.Format("0x{0:x}", 45633 + (i / 8) - 1) #>,
-<#
-    }
+	/// <summary>
+	/// MD4
+	/// </summary>
+	MD4 = 0xd4,
 
-	var skeinIndex = 0;
-	for (int bits = 256; bits <= 1024; bits *= 2)
+	/// <summary>
+	/// MD5
+	/// </summary>
+	MD5 = 0xd5,
+
+	/// <summary>
+	/// SHA1
+	/// </summary>
+	SHA1 = 0x11,
+
+	/// <summary>
+	/// SHA2 256
+	/// </summary>
+	SHA2_256 = 0x12,
+
+	/// <summary>
+	/// SHA2 512
+	/// </summary>
+	SHA2_512 = 0x13,
+
+	/// <summary>
+	/// SHA3 512
+	/// </summary>
+	SHA3_512 = 0x14,
+
+	/// <summary>
+	/// SHA3 384
+	/// </summary>
+	SHA3_384 = 0x15,
+
+	/// <summary>
+	/// SHA3 256
+	/// </summary>
+	SHA3_256 = 0x16,
+
+	/// <summary>
+	/// SHA3 224
+	/// </summary>
+	SHA3_224 = 0x17,
+
+	/// <summary>
+	/// Shake 128
+	/// </summary>
+	SHAKE_128 = 0x18,
+
+	/// <summary>
+	/// Shake 256
+	/// </summary>
+	SHAKE_256 = 0x19,
+<#
+var keccac_bits = new int[] { 224, 256, 384, 512 };
+for (var i = 0; i < keccac_bits.Length; i++)
+{
+#>
+
+	/// <summary>
+	/// Keccak <#= keccac_bits[i] #> bits
+	/// </summary>
+	KECCAK_<#= keccac_bits[i] #> = <#= string.Format("0x{0:X}", 26 + i) #>,
+<#
+}
+#>
+
+	/// <summary>
+	/// MurMur3 128
+	/// </summary>
+	MURMUR3_128 = 0x23,
+
+	/// <summary>
+	/// MurMur3 32
+	/// </summary>
+	MURMUR3_32 = 0x22,
+<#
+for (int i = 8; i <= 512; i += 8)
+{
+#>
+
+	/// <summary>
+	/// Blake 2b <#= i #>
+	/// </summary>
+	BLAKE2B_<#= i #> = <#= string.Format("0x{0:x}", 45569 + (i / 8) - 1) #>,
+<#
+}
+
+for (int i = 8; i <= 256; i += 8) { #>
+
+	/// <summary>
+	/// Blake 2s <#= i #>
+	/// </summary>
+	BLAKE2S_<#= i #> = <#= string.Format("0x{0:x}", 45633 + (i / 8) - 1) #>,
+<#
+}
+
+var skeinIndex = 0;
+for (int bits = 256; bits <= 1024; bits *= 2)
+{
+	for (int length = 8; length <= bits; length += 8)
 	{
-		for (int length = 8; length <= bits; length += 8)
-		{
 #>
-        SKEIN<#= bits #>_<#= length #> = <#= string.Format("0x{0:x}", 45825 + skeinIndex++) #>,
+
+	/// <summary>
+	/// Skein <#= bits #> bits <#= length #> length
+	/// </summary>
+	SKEIN<#= bits #>_<#= length #> = <#= string.Format("0x{0:x}", 45825 + skeinIndex++) #>,
 <#
-		}
 	}
+}
 #>
-        DBL_SHA2_256 = 0x56
-    }
+
+	/// <summary>
+	/// Double SHA2 256 bit
+	/// </summary>
+	DBL_SHA2_256 = 0x56
 }
